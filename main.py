@@ -1,12 +1,33 @@
 from doctest import master
 import tkinter as tk
+import json
 
 window = tk.Tk()
 window.title("Rapid React Scouting ")
 window.configure(background='white')
 
 def addTeam(): #called when submit button pressed; adds new team object to json
+    with open("TeamData.json", "r") as f:
+        teams = json.load(f)
+    if str(robotNumEntry.get()) in teams:
+        teams[robotNumEntry.get()]["highBalls"] += int(highBallsEntry.get())
+        teams[robotNumEntry.get()]["lowBalls"] += int(lowBallsEntry.get())
+        teams[robotNumEntry.get()]["rungsClimbed"] += int(rungsClimbed.get())
+        teams[robotNumEntry.get()]["numDataPoints"] += 1
+    else:
+        teams[robotNumEntry.get()] = {}
+        teams[robotNumEntry.get()]["startingSpot"] = startingSpot.get()
+        teams[robotNumEntry.get()]["autoBalls"] = autoBallsEntry.get()
+        teams[robotNumEntry.get()]["ballColor"] = ballColor.get()
+        teams[robotNumEntry.get()]["floorBalls"] = floorBalls.get()
+        teams[robotNumEntry.get()]["droppedBalls"] = droppedBalls.get()
+        teams[robotNumEntry.get()]["highBalls"] = int(highBallsEntry.get())
+        teams[robotNumEntry.get()]["lowBalls"] = int(lowBallsEntry.get())
+        teams[robotNumEntry.get()]["rungsClimbed"] = int(rungsClimbed.get())
+        teams[robotNumEntry.get()]["numDataPoints"] = 0
 
+    with open("TeamData.json", "w") as f:
+        json.dump(teams, f)
 
 #Add in text for all questions
 tk.Label(window, text='Robot Num', bg='white', fg='black', font='none 12 bold').grid(row=0, column=0, sticky='W') 
