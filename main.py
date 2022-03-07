@@ -38,10 +38,23 @@ def findTeams():
     with open("TeamData.json", "r") as f:
         teams = json.load(f)
     for team in teams:
-        #print(team)
         if (teams[team]["startingSpot"] == startingSpotFilter.get()) and ((teams[team]['autoBalls'] / teams[team]['numDataPoints']) >= int(autoBallsFilter.get())) and (teams[team]['ballColor'] == ballColorFilter.get()) and (teams[team]['floorBalls'] == floorBallsFilter.get()) and (teams[team]['droppedBalls'] == droppedBallsFilter.get()) and  ((teams[team]['highBalls'] / teams[team]['numDataPoints']) >= int(highBallsFilter.get())) and ((teams[team]['lowBalls'] / teams[team]['numDataPoints']) >= int(lowBallsFilter.get())) and ((teams[team]['rungsClimbed'] / teams[team]['numDataPoints']) >= int(rungsClimbedFilter.get())):
             output.insert('end', team +"               num penalties:"+teams[team]["penalties"]+'\n')
-
+def findTeamNumber():
+    output.delete(1.0, 'end')
+    with open("TeamData.json", "r") as f:
+        teams = json.load(f)
+    for team in teams:
+        if team == searchByTeamNumFilter.get():
+            output.insert('end', 'startingSpot: '+ teams[team]["startingSpot"]+ '\n')
+            output.insert('end', 'Auto Balls:: '+ str(teams[team]["autoBalls"] / teams[team]["numDataPoints"])+ '\n')
+            output.insert('end', 'Ball Color: '+ str(teams[team]["ballColor"])+ '\n')
+            output.insert('end', 'Floor Balls: '+ str(teams[team]["floorBalls"])+ '\n')
+            output.insert('end', 'Balls Dropped in: '+ str(teams[team]["droppedBalls"])+ '\n')
+            output.insert('end', 'Balls in High: '+ str(teams[team]["highBalls"]/ teams[team]["numDataPoints"])+ '\n')
+            output.insert('end', 'Balls in low: '+ str(teams[team]["lowBalls"]/ teams[team]["numDataPoints"])+ '\n')
+            output.insert('end', 'Rungs Climbed: '+ str(teams[team]["rungsClimbed"]/ teams[team]["numDataPoints"])+ '\n')
+            output.insert('end', 'Penalties: '+ str(teams[team]["penalties"]/ teams[team]["numDataPoints"])+ '\n')
 #Add in text for all questions
 tk.Label(window, text='Robot Num', bg='white', fg='black', font='none 12 bold').grid(row=0, column=0, sticky='W') 
 tk.Label(window, text='Starting Spot', bg='white', fg='black', font='none 12 bold').grid(row=1, column=0, sticky='W')
@@ -108,6 +121,9 @@ tk.Label(window, text='Min Balls scored in high goal', bg='white', fg='black', f
 tk.Label(window, text='Min Balls scored in low goal', bg='white', fg='black', font='none 12 bold').grid(row=11, column=6, sticky='W')
 tk.Label(window, text='Min Rungs Climbed', bg='white', fg='black', font='none 12 bold').grid(row=11, column=7, sticky='W')
 
+tk.Label(window, text='Or search by team number', bg='white', fg='black', font='none 12 bold').grid(row=14, column=2, sticky='W')
+
+
 #Input objects to filter data
 startingSpotFilter = tk.StringVar(master)
 startingSpotFilter.set("1") # default value
@@ -140,6 +156,10 @@ rungsClimbedFilter.set("1") # default value
 rungsClimbedDropdownFilter = tk.OptionMenu(master, rungsClimbedFilter, "1", "2", "3","4")
 rungsClimbedDropdownFilter.grid(row=12, column=7, sticky='W')
 
+searchByTeamNumFilter = tk.Entry(window, width=20, bg='white')
+searchByTeamNumFilter.grid(row=14, column=3, sticky='W') 
+
+tk.Button(window, text='Search by Team Number', width=20, command=findTeamNumber).grid(row=14, column=4, sticky='W')
 tk.Button(window, text='Find Teams', width=20, command=findTeams).grid(row=13, column=0, sticky='W')
 
 output = tk.Text(window, width=50, height=20, wrap='word', background='white')
