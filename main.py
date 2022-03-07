@@ -16,6 +16,8 @@ def addTeam(): #called when submit button pressed; adds new team object to json
         teams[robotNumEntry.get()]["autoBalls"] += int(autoBallsEntry.get())
         teams[robotNumEntry.get()]["rungsClimbed"] += int(rungsClimbed.get())
         teams[robotNumEntry.get()]["numDataPoints"] += 1
+        teams[robotNumEntry.get()]["penalties"] += int(penaltiesEntry.get())
+
     else:
         teams[robotNumEntry.get()] = {}
         teams[robotNumEntry.get()]["startingSpot"] = startingSpot.get()
@@ -27,7 +29,7 @@ def addTeam(): #called when submit button pressed; adds new team object to json
         teams[robotNumEntry.get()]["lowBalls"] = int(lowBallsEntry.get())
         teams[robotNumEntry.get()]["rungsClimbed"] = int(rungsClimbed.get())
         teams[robotNumEntry.get()]["numDataPoints"] = 1
-
+        teams[robotNumEntry.get()]["penalties"] = int(penaltiesEntry.get())
     with open("TeamData.json", "w") as f:
         json.dump(teams, f)
 
@@ -38,7 +40,7 @@ def findTeams():
     for team in teams:
         #print(team)
         if (teams[team]["startingSpot"] == startingSpotFilter.get()) and ((teams[team]['autoBalls'] / teams[team]['numDataPoints']) >= int(autoBallsFilter.get())) and (teams[team]['ballColor'] == ballColorFilter.get()) and (teams[team]['floorBalls'] == floorBallsFilter.get()) and (teams[team]['droppedBalls'] == droppedBallsFilter.get()) and  ((teams[team]['highBalls'] / teams[team]['numDataPoints']) >= int(highBallsFilter.get())) and ((teams[team]['lowBalls'] / teams[team]['numDataPoints']) >= int(lowBallsFilter.get())) and ((teams[team]['rungsClimbed'] / teams[team]['numDataPoints']) >= int(rungsClimbedFilter.get())):
-            output.insert('end', team +'\n')
+            output.insert('end', team +"               num penalties:"+teams[team]["penalties"]+'\n')
 
 #Add in text for all questions
 tk.Label(window, text='Robot Num', bg='white', fg='black', font='none 12 bold').grid(row=0, column=0, sticky='W') 
@@ -50,10 +52,15 @@ tk.Label(window, text='Have balls dropped in?', bg='white', fg='black', font='no
 tk.Label(window, text='Balls scored in high goal', bg='white', fg='black', font='none 12 bold').grid(row=6, column=0, sticky='W')
 tk.Label(window, text='Balls scored in low goal', bg='white', fg='black', font='none 12 bold').grid(row=7, column=0, sticky='W')
 tk.Label(window, text='Rungs Climbed', bg='white', fg='black', font='none 12 bold').grid(row=8, column=0, sticky='W')
+tk.Label(window, text='Num of Penalties', bg='white', fg='black', font='none 12 bold').grid(row=0, column=2, sticky='W')
+
 
 #Make input objects for each data point
 robotNumEntry = tk.Entry(window, width=20, bg='white')
 robotNumEntry.grid(row=0, column=1, sticky='W') 
+
+penaltiesEntry = tk.Entry(window, width=20, bg='white')
+penaltiesEntry.grid(row=0, column=3, sticky='W') 
 
 startingSpot = tk.StringVar(master)
 startingSpot.set("1") # default value
