@@ -1,11 +1,13 @@
 from doctest import master
 import tkinter as tk
+from tkinter import ttk
 import json
 from tracemalloc import start
 
 window = tk.Tk()
 window.title("Rapid React Scouting")
 window.configure(background='white')
+window.geometry("1000x750")
 
 def addTeam(): #called when submit button pressed; adds new team object to json
     with open("TeamData.json", "r") as f:
@@ -56,112 +58,142 @@ def findTeamNumber():
             output.insert('end', 'Rungs Climbed: '+ str(teams[team]["rungsClimbed"]/ teams[team]["numDataPoints"])+ '\n')
             output.insert('end', 'Penalties: '+ str(teams[team]["penalties"]/ teams[team]["numDataPoints"])+ '\n')
 #Add in text for all questions
-tk.Label(window, text='Robot Num', bg='white', fg='black', font='none 12 bold').grid(row=0, column=0, sticky='W') 
-tk.Label(window, text='Starting Spot', bg='white', fg='black', font='none 12 bold').grid(row=1, column=0, sticky='W')
-tk.Label(window, text='Auto Balls', bg='white', fg='black', font='none 12 bold').grid(row=2, column=0, sticky='W')
-tk.Label(window, text='Detect Ball Color?', bg='white', fg='black', font='none 12 bold').grid(row=3, column=0, sticky='W')
-tk.Label(window, text='Pick up balls from floor?', bg='white', fg='black', font='none 12 bold').grid(row=4, column=0, sticky='W')
-tk.Label(window, text='Have balls dropped in?', bg='white', fg='black', font='none 12 bold').grid(row=5, column=0, sticky='W')
-tk.Label(window, text='Balls scored in high goal', bg='white', fg='black', font='none 12 bold').grid(row=6, column=0, sticky='W')
-tk.Label(window, text='Balls scored in low goal', bg='white', fg='black', font='none 12 bold').grid(row=7, column=0, sticky='W')
-tk.Label(window, text='Rungs Climbed', bg='white', fg='black', font='none 12 bold').grid(row=8, column=0, sticky='W')
-tk.Label(window, text='Num of Penalties', bg='white', fg='black', font='none 12 bold').grid(row=0, column=2, sticky='W')
-
+tk.Label(window, text='Auto', bg='white', fg='black', font='none 12 bold').place(x=115, y=30, width=70, height=20)
+tk.Label(window, text='Auto', bg='white', fg='black', font='none 12 bold').place(x=115, y=400, width=70, height=20)
+tk.Label(window, text='Balls', bg='white', fg='black', font='none 12 bold').place(x=415, y=30, width=70, height=20)
+tk.Label(window, text='Balls', bg='white', fg='black', font='none 12 bold').place(x=415, y=400, width=70, height=20)
+tk.Label(window, text='Climb', bg='white', fg='black', font='none 12 bold').place(x=115, y=187, width=70, height=20)
+tk.Label(window, text='Climb', bg='white', fg='black', font='none 12 bold').place(x=115, y=500, width=70, height=20)
+tk.Label(window, text='Robot Num', bg='white', fg='black', font='none 12 bold').place(x=230,y=10, width= 70, height=20)
+tk.Label(window, text='Start Pos', bg='white', fg='black', font='none 12 bold').place(x=80, y=90, width=70, height=20)
+tk.Label(window, text='Balls Scored', bg='white', fg='black', font='none 12 bold').place(x=60, y=110, width=90, height=20)
+tk.Label(window, text='Detect Color?', bg='white', fg='black', font='none 12 bold').place(x=350, y=90, width=100, height=20)
+tk.Label(window, text='Ground Intake?', bg='white', fg='black', font='none 12 bold').place(x=350, y=110, width=100, height=20)
+tk.Label(window, text='Driver Intake?', bg='white', fg='black', font='none 12 bold').place(x=350, y=130, width=100, height=20)
+tk.Label(window, text='Balls in high goal', bg='white', fg='black', font='none 12 bold').place(x=350, y=150, width=100, height=20)
+tk.Label(window, text='Balls in low goal', bg='white', fg='black', font='none 12 bold').place(x=350, y=170, width=100, height=20)
+tk.Label(window, text='Rungs Climbed', bg='white', fg='black', font='none 12 bold').place(x=50, y=267, width=100, height=20)
+tk.Label(window, text='Time Taken', bg='white', fg='black', font='none 12 bold').place(x=80, y=287, width=70, height=20)
+#tk.Label(window, text='Num of Penalties', bg='white', fg='black', font='none 12 bold').grid(row=0, column=2, sticky='W')
 
 #Make input objects for each data point
 robotNumEntry = tk.Entry(window, width=20, bg='white')
-robotNumEntry.grid(row=0, column=1, sticky='W') 
+robotNumEntry.place(x=300, y=10, width=70, height=20)
 
-penaltiesEntry = tk.Entry(window, width=20, bg='white')
-penaltiesEntry.grid(row=0, column=3, sticky='W') 
+#penaltiesEntry = tk.Entry(window, width=20, bg='white')
+#penaltiesEntry.grid(row=0, column=3, sticky='W')
 
 startingSpot = tk.StringVar(master)
 startingSpot.set("1") # default value
 startingSpotDropdown = tk.OptionMenu(master, startingSpot, "1", "2", "3")
-startingSpotDropdown.grid(row=1, column=1, sticky='W') 
+startingSpotDropdown.place(x=150, y=90, width=70, height=20)
 
-autoBallsEntry = tk.Entry(window, width=20, bg='white')
-autoBallsEntry.grid(row=2, column=1, sticky='W') 
+autoBallsEntry = tk.Entry(window, width=90, bg='white')
+autoBallsEntry.place(x=150, y=110, width=90, height=20)
 
 ballColor = tk.BooleanVar(value=False)
 ballColorBox = tk.Checkbutton(window,variable=ballColor, onvalue=True, offvalue=False)
-ballColorBox.grid(row=3, column=1, sticky='W') 
+ballColorBox.place(x=450, y=90, width=100, height=20)
 
 floorBalls = tk.BooleanVar(value=False)
 floorBallsBox = tk.Checkbutton(window,variable=floorBalls, onvalue=True, offvalue=False)
-floorBallsBox.grid(row=4, column=1, sticky='W') 
+floorBallsBox.place(x=450, y=110, width=100, height=20)
 
 droppedBalls = tk.BooleanVar(value=False)
 droppedBallsBox = tk.Checkbutton(window,variable=droppedBalls, onvalue=True, offvalue=False)
-droppedBallsBox.grid(row=5, column=1, sticky='W') 
+droppedBallsBox.place(x=450, y=130, width=100, height=20)
 
-highBallsEntry = tk.Entry(window, width=20, bg='white')
-highBallsEntry.grid(row=6, column=1, sticky='W') 
+highBallsEntry = tk.Entry(window, width=70, bg='white')
+highBallsEntry.place(x=450, y=150, width=70, height=20)
 
-lowBallsEntry = tk.Entry(window, width=20, bg='white')
-lowBallsEntry.grid(row=7, column=1, sticky='W') 
+lowBallsEntry = tk.Entry(window, width=70, bg='white')
+lowBallsEntry.place(x=450, y=170, width=70, height=20)
 
 rungsClimbed = tk.StringVar(master)
 rungsClimbed.set("1") # default value
 rungsClimbedDropdown = tk.OptionMenu(master, rungsClimbed, "1", "2", "3","4")
-rungsClimbedDropdown.grid(row=8, column=1, sticky='W') 
+rungsClimbedDropdown.place(x=150, y=267, width=100, height=20)
 
-tk.Button(window, text='Add Team', width=20, command=addTeam).grid(row=9, column=0, sticky='W')
+timeTakenEntry = tk.Entry(window, width=20, bg='white')
+timeTakenEntry.place(x=150, y=287, width=70, height=20)
+
+tk.Button(window, text='Add Team', width=20, command=addTeam).place(x=260, y=350, width=80, height=20)
 
 #spacer
 tk.Label(window, text='', bg='white', fg='black', font='none 12 bold').grid(row=10, column=0, sticky='W')
 
 #Add text for filters
-tk.Label(window, text='Starting Spot', bg='white', fg='black', font='none 12 bold').grid(row=11, column=0, sticky='W')
-tk.Label(window, text='Min Auto Balls', bg='white', fg='black', font='none 12 bold').grid(row=11, column=1, sticky='W')
-tk.Label(window, text='Detect Ball Color?', bg='white', fg='black', font='none 12 bold').grid(row=11, column=2, sticky='W')
-tk.Label(window, text='Pick up balls from floor?', bg='white', fg='black', font='none 12 bold').grid(row=11, column=3, sticky='W')
-tk.Label(window, text='Have balls dropped in?', bg='white', fg='black', font='none 12 bold').grid(row=11, column=4, sticky='W')
-tk.Label(window, text='Min Balls scored in high goal', bg='white', fg='black', font='none 12 bold').grid(row=11, column=5, sticky='W')
-tk.Label(window, text='Min Balls scored in low goal', bg='white', fg='black', font='none 12 bold').grid(row=11, column=6, sticky='W')
-tk.Label(window, text='Min Rungs Climbed', bg='white', fg='black', font='none 12 bold').grid(row=11, column=7, sticky='W')
-
-tk.Label(window, text='Or search by team number', bg='white', fg='black', font='none 12 bold').grid(row=14, column=2, sticky='W')
-
+tk.Label(window, text='Start Pos', bg='white', fg='black', font='none 12 bold').place(x=80, y=420, width=70, height=20)
+tk.Label(window, text='Min Balls Scored', bg='white', fg='black', font='none 12 bold').place(x=50, y=440, width=100, height=20)
+tk.Label(window, text='Detect Color?', bg='white', fg='black', font='none 12 bold').place(x=350, y=420, width=100, height=20)
+tk.Label(window, text='Ground Intake?', bg='white', fg='black', font='none 12 bold').place(x=350, y=440, width=100, height=20)
+tk.Label(window, text='Driver Intake?', bg='white', fg='black', font='none 12 bold').place(x=350, y=460, width=100, height=20)
+tk.Label(window, text='Min Balls in High', bg='white', fg='black', font='none 12 bold').place(x=350, y=480, width=100, height=20)
+tk.Label(window, text='Min Balls in Low', bg='white', fg='black', font='none 12 bold').place(x=350, y=500, width=100, height=20)
+tk.Label(window, text='Min Rungs Climbed', bg='white', fg='black', font='none 12 bold').place(x=30, y=520, width=120, height=20)
 
 #Input objects to filter data
 startingSpotFilter = tk.StringVar(master)
 startingSpotFilter.set("1") # default value
 startingSpotDropdownFilter = tk.OptionMenu(master, startingSpotFilter, "1", "2", "3")
-startingSpotDropdownFilter.grid(row=12, column=0, sticky='W') 
+startingSpotDropdownFilter.place(x=150, y=420, width=70, height=20)
 
 autoBallsFilter = tk.Entry(window, width=20, bg='white')
-autoBallsFilter.grid(row=12, column=1, sticky='W') 
+autoBallsFilter.place(x=150, y=440, width=100, height=20)
 
 ballColorFilter = tk.BooleanVar(value=False)
 ballColorBoxFilter = tk.Checkbutton(window,variable=ballColorFilter, onvalue=True, offvalue=False)
-ballColorBoxFilter.grid(row=12, column=2, sticky='W') 
+ballColorBoxFilter.place(x=450, y=420, width=100, height=20)
 
 floorBallsFilter = tk.BooleanVar(value=False)
 floorBallsBoxFilter = tk.Checkbutton(window,variable=floorBallsFilter, onvalue=True, offvalue=False)
-floorBallsBoxFilter.grid(row=12, column=3, sticky='W') 
+floorBallsBoxFilter.place(x=450, y=440, width=100, height=20)
 
 droppedBallsFilter = tk.BooleanVar(value=False)
 droppedBallsBoxFilter = tk.Checkbutton(window,variable=droppedBallsFilter, onvalue=True, offvalue=False)
-droppedBallsBoxFilter.grid(row=12, column=4, sticky='W') 
+droppedBallsBoxFilter.place(x=450, y=460, width=100, height=20)
 
 highBallsFilter = tk.Entry(window, width=20, bg='white')
-highBallsFilter.grid(row=12, column=5, sticky='W') 
+highBallsFilter.place(x=450, y=480, width=100, height=20)
 
 lowBallsFilter = tk.Entry(window, width=20, bg='white')
-lowBallsFilter.grid(row=12, column=6, sticky='W') 
+lowBallsFilter.place(x=450, y=500, width=100, height=20)
 
 rungsClimbedFilter = tk.StringVar(master)
 rungsClimbedFilter.set("1") # default value
 rungsClimbedDropdownFilter = tk.OptionMenu(master, rungsClimbedFilter, "1", "2", "3","4")
-rungsClimbedDropdownFilter.grid(row=12, column=7, sticky='W')
+rungsClimbedDropdownFilter.place(x=150, y=520, width=120, height=20)
 
 searchByTeamNumFilter = tk.Entry(window, width=20, bg='white')
-searchByTeamNumFilter.grid(row=14, column=3, sticky='W') 
+searchByTeamNumFilter.place(x=300, y=380, width=200, height=20)
 
-tk.Button(window, text='Search by Team Number', width=20, command=findTeamNumber).grid(row=14, column=4, sticky='W')
-tk.Button(window, text='Find Teams', width=20, command=findTeams).grid(row=13, column=0, sticky='W')
+tk.Button(window, text='Search by Team Number', width=20, command=findTeamNumber).place(x=100, y=380, width=200, height=20)
+tk.Button(window, text='Find Teams', width=20, command=findTeams).place(x=10, y=605, width=100, height=20)
 
 output = tk.Text(window, width=50, height=20, wrap='word', background='white')
-output.grid(row=14,column=0,columnspan=2,sticky='W')
+output.place(x=10, y=620, width=570, height=110)
+
+#add dividers (separator widgets)
+xaxis = tk.ttk.Separator(window, orient='vertical')
+xaxis.place(x=600, width=2, height=750)
+
+yaxis = tk.ttk.Separator(window, orient='horizontal')
+yaxis.place(y=375, width=1000, height=2)
+
+q2v = tk.ttk.Separator(window, orient='vertical')
+q2v.place(x=300, y=30, width=2, height=320)
+
+q2h = tk.ttk.Separator(window, orient='horizontal')
+q2h.place(x=0, y=187, width=300, height=2)
+
+q3h = tk.ttk.Separator(window, orient='horizontal')
+q3h.place(x=0, y=600, width=600, height=2)
+
+q3v = tk.ttk.Separator(window, orient='vertical')
+q3v.place(x=300, y=400, width=2, height=200)
+
+q3h2 = tk.ttk.Separator(window, orient='horizontal')
+q3h2.place(x=0, y=500, width=300, height=2)
+
+
 window.mainloop()
