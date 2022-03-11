@@ -40,16 +40,17 @@ def find_teams():
     output1.delete(1.0, 'end')
     with open("TeamData.json", "r") as f:
         teams = json.load(f)
-    for team in teams:
-        if (teams[team]["startingSpot"] == startingSpotFilter.get()) and (
-                (teams[team]['autoBalls'] / teams[team]['numDataPoints']) >= int(autoBallsFilter.get())) and (
-                teams[team]['ballColor'] == ballColorFilter.get()) and (
-                teams[team]['floorBalls'] == floorBallsFilter.get()) and (
-                teams[team]['droppedBalls'] == droppedBallsFilter.get()) and (
-                (teams[team]['highBalls'] / teams[team]['numDataPoints']) >= int(highBallsFilter.get())) and (
-                (teams[team]['lowBalls'] / teams[team]['numDataPoints']) >= int(lowBallsFilter.get())) and (
-                (teams[team]['rungsClimbed'] / teams[team]['numDataPoints']) >= int(rungsClimbedFilter.get())):
-            output1.insert('end', team + "               num penalties:" + teams[team]["penalties"] + '\n')
+    #for team in teams:
+        #if (teams[team]["startingSpot"] == startingSpotFilter.get()) and (
+                #(teams[team]['autoBalls'] / teams[team]['numDataPoints']) >= int(autoBallsFilter.get())) and (
+                #teams[team]['ballColor'] == ballColorFilter.get()) and (
+                #teams[team]['floorBalls'] == floorBallsFilter.get()) and (
+                #teams[team]['droppedBalls'] == droppedBallsFilter.get()) and (
+                #(teams[team]['highBalls'] / teams[team]['numDataPoints']) >= int(highBallsFilter.get())) and (
+                #(teams[team]['lowBalls'] / teams[team]['numDataPoints']) >= int(lowBallsFilter.get())) and (
+                #(teams[team]['rungsClimbed'] / teams[team]['numDataPoints']) >= int(rungsClimbedFilter.get())):
+            #output1.insert('end', team + "               num penalties:" + teams[team]["penalties"] + '\n')
+
 
 
 def find_team_number():
